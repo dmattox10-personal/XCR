@@ -74,6 +74,10 @@ h1 {
   font-size: 36px;
 }
 
+.font-huge {
+  font-size: 48px;
+}
+
 .font-white {
   color: white;
 }
