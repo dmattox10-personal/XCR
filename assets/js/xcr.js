@@ -1,3 +1,4 @@
+function xcr() {
 /*
 
 FLOW:
@@ -10,17 +11,36 @@ SOMEWHERE in there, do the USD conversion from BTC.
 */
 
 //var name = getName();
+var bitcoinValue = 0;
 
-allTheCoins();
-matchSymName(getName());
-getValues(SYMBOL);
-doMath(BTC);
-addRow(sym, usd, btc, perc);
+allTheCoins("https://api.coinmarketcap.com/v1/ticker/");
+//matchSymName(getName());
+//getValues(SYMBOL);
+//doMath(BTC);
+//addRow(sym, usd, btc, perc);
 
 function getName(){
   var entry = document.getElementById("symbol");
   symbol = symbol.value;
   return symbol;
+}
+
+function allTheCoins(URL) {
+  var tickerRequest = new XMLHttpRequest();
+  tickerRequest.open('GET', URL);
+  tickerRequest.send();
+  tickerRequest.onload = function() {
+    if (tickerRequest.status >= 200 && tickerRequest.status < 400) {
+      var input = JSON.parse(tickerRequest.responseText);
+      var walletContents = input;
+      console.table(input);
+
+      //updateWallet(walletContents);
+    }
+    else {
+      console.log("We connected to the server, but it returned an error.");
+    }
+  }
 }
 
 /*  var symbol = "";
@@ -46,3 +66,4 @@ colorGreen
 }
 
 */
+}
