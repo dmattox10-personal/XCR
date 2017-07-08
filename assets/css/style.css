@@ -208,11 +208,13 @@ h2 a {
 /* Background-color of the odd rows */
 .container tr:nth-child(odd) {
 	  background-color: #424242;
+    text-align: center;
 }
 
 /* Background-color of the even rows */
 .container tr:nth-child(even) {
 	  background-color: #616161;
+    text-align: center;
 }
 
 .container th {

@@ -3,7 +3,6 @@
 FLOW:
 get ALL coins, store NAME and SYMBOL into an object.
 loop over the names object comparing to $SYMBOL text from form, return the NAME when found.
-hit the API again, with the $NAME added to the URL.
 create a table row.
 insert data from second API hit, into table row
 SOMEWHERE in there, do the USD conversion from BTC.
@@ -25,16 +24,6 @@ function run() {
   getFormData();
   allTheCoins("https://api.coinmarketcap.com/v1/ticker/");
 }
-
-/*
-function testGlobal() {
-  console.log("These are hopefully the values of the global variables");
-  console.log(formSym);
-  console.log(formUSD);
-  console.log(formBTC);
-  console.log(form24h);
-}
-*/
 
 //getSymbol();
 //matchSymName(symbol);
@@ -62,48 +51,50 @@ function allTheCoins(URL) {
       //console.table(input); //Keeping this here for quick access to the table headers
       for(var i in input)
       coins.push(input[i]);
-      testFunction(coins);
-      //for (var i = 0; i < coins.length; i++) {
-      //console.table(coins[i]);
-      //console.log(coins[i].symbol); //I use symbol right here, and it works
-      //}
-      //var length = coins.length + 1; // This variable is not getting reset....
-      //console.log(length);
+      for (var i = 0; i < coins.length; i++) { //beginning of loop
+
+        if (coins[i].symbol == form) { // But right here, I get an error.
+          formSym = coins[i].name;
+          formUSD = coins[i].price_usd;
+          formBTC = coins[i].price_btc;
+          form24h = coins[i].percent_change_24h;
+          console.log(formSym);
+          console.log(formUSD);
+          console.log(formBTC);
+          console.log(form24h);
+          //DO EVERYTHING RIGHT HERE! On second thought, no, this needs fixed.
+        }
+      }
+      //Try to do stuff here?
+      var table = document.getElementById("table");
+      var row = table.insertRow(0);
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+      var cell3 = row.insertCell(2);
+      var cell4 = row.insertCell(3);
+      cell1.innerHTML = formSym;
+      cell2.innerHTML = formUSD;
+      cell3.innerHTML = formBTC;
+      cell4.innerHTML = form24h;
+      //end of loop
     }
     else {
       console.log("We connected to the server, but it returned an error.");
     }
-    console.log(formSym); // NOPE NOPE NOPE
-    console.log(formUSD); // NOPE NOPE NOPE
-    console.log(formBTC); // NOPE NOPE NOPE
-    console.log(form24h); // NOPE NOPE NOPE
+    //console.log(formSym); // NOPE NOPE NOPE
+    //console.log(formUSD); // NOPE NOPE NOPE
+    //console.log(formBTC); // NOPE NOPE NOPE
+    //console.log(form24h); // NOPE NOPE NOPE
     //Nothing below here.
   }
   //return coins; //Does "returning" a value "update it" in the global scope? Nope.
 }
 
-function testFunction(coins) {
-  for (var i = 0; i < (coins.length + 1); i++) {
 
-    if (coins[i].symbol == form) { // But right here, I get an error.
-      formSym = coins[i].name;
-      formUSD = coins[i].price_usd;
-      formBTC = coins[i].price_btc;
-      form24h = coins[i].percent_change_24h;
-      console.log(formSym);
-      console.log(formUSD);
-      console.log(formBTC);
-      console.log(form24h);
-      //DO EVERYTHING RIGHT HERE! On second thought, no, this needs fixed.
-    }
-    else if (i > coins.length) {
-      formSym = "Error";
-      formUSD = 0;
-      formBTC = 0;
-      form24h = 0;
-    }
-  }
-}
+//function getData(coins) {
+
+//}
+
 
 /*
 function matchSymName(form) { //This never worked
