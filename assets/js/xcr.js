@@ -14,7 +14,7 @@ var coins = new Array;
 var form = ""; // Value pulled from the form
 var symbol = ""; // "id" on the table
 var id = ""; // value pulled from the table at coins[i].id matched to coins[i].symbol
-
+var finished = false;
 var formSym = "";
 var formUSD = 0;
 var formBTC = 0;
@@ -42,6 +42,7 @@ function getFormData(){ //This function works GREAT!
 }
 
 function allTheCoins(URL) {
+  finished = false;
   var tickerRequest = new XMLHttpRequest();
   tickerRequest.open('GET', URL);
   tickerRequest.send();
@@ -62,7 +63,14 @@ function allTheCoins(URL) {
           console.log(formUSD);
           console.log(formBTC);
           console.log(form24h);
+          finished = true;
           //DO EVERYTHING RIGHT HERE! On second thought, no, this needs fixed.
+        }
+        else if (i == coins.length - 1 && !finished) {
+          formSym = "ERROR!";
+          formUSD = 0;
+          formBTC = 0;
+          form24h = 0;
         }
       }
       //Try to do stuff here?
